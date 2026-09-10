@@ -48,3 +48,33 @@ def normalizar_cliente(nombre: str) -> str:
     if len(limpio) < 3:
         raise ErrorValidacion("el nombre del cliente es demasiado corto")
     return limpio.title()
+
+def clasificar_prioridad_despacho(
+    peso_kg: float,
+    valor_declarado: float,
+    urgente: bool,
+    zona: str,
+) -> str:
+    prioridad = 0
+
+    if urgente:
+        prioridad += 3
+
+    if peso_kg > 50:
+        prioridad += 2
+    elif peso_kg > 20:
+        prioridad += 1
+
+    if valor_declarado > 1000:
+        prioridad += 2
+    elif valor_declarado > 500:
+        prioridad += 1
+
+    if zona in {"selva", "sierra_alta", "frontera"}:
+        prioridad += 2
+
+    if prioridad >= 6:
+        return "critica"
+    if prioridad >= 3:
+        return "alta"
+    return "normal"
