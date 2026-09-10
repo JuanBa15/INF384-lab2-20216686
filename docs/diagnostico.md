@@ -32,3 +32,21 @@
 ## 1.5 El proxy. Qué número concreto van a medir para sustentar que la métrica se movió. Decláralo antes de intervenir.
 
 - El proxy será la duración total de una ejecución exitosa del workflow, medida en segundos. Antes de intervenir, la línea base registrada es de 27 s, 37 s y 22 s, cuyo promedio es 28.7 s. Después de la intervención se volverá a ejecutar el workflow y se comparará su duración promedio con los 28.7 s iniciales. Una reducción de este valor será la evidencia cuantitativa utilizada para sustentar una mejora en el tiempo de retroalimentación asociado a Lead Time for Changes.
+
+## 4.1 Medición posterior. El valor del proxy después de la intervención, junto al de la línea base. Qué cambió y en qué proporción.
+
+- La línea base del pipeline fue de 28,7 segundos en promedio. Después de la intervención, una ejecución exitosa registró una duración total de 83 segundos (1 min 23 s). Esto representa un incremento aproximado de 189,2 % respecto de la línea base. Aunque se incorporó caché de dependencias para evitar descargas innecesarias, la intervención también agregó nuevas validaciones al flujo, en particular la espera y verificación del Quality Gate, y estableció que el job publicar se ejecute después de validar. Por ello, el pipeline resultante ofrece mayores garantías de calidad y control, pero su duración total aumentó. En consecuencia, el proxy no evidencia una mejora en el tiempo total del pipeline, sino un costo temporal asociado a las nuevas garantías incorporadas.
+
+## 4.2 Justificación de la versión. Qué versión declararon y qué commits del historial la sustentan.
+
+- Se declaró la versión 1.2.0, partiendo de v1.2.0. La decisión se sustenta en los commits posteriores a dicho tag: Add pull_request trigger to pipeline workflow #14. Estos cambios se justifican porque en este commit se ve como información "despachos-1.2.0". Link: https://github.com/JuanBa15/INF384-lab2-20216686/actions/runs/34537008171
+  
+## 4.3 Lo que no se resolvió. El pipeline sigue teniendo limitaciones. Nombren una y expliquen qué haría falta para resolverla.
+
+- Una limitación que permanece es que el pipeline no realiza un despliegue real de la aplicación o paquete a un entorno de producción. Actualmente finaliza con la construcción y publicación de un artifact dentro de GitHub Actions. Para resolver esta limitación sería necesario incorporar un job de despliegue hacia un entorno objetivo, configurar de manera segura sus credenciales y añadir mecanismos de verificación posterior al despliegue, como health checks y, de ser necesario, rollback. Esto también permitiría medir las métricas DORA asociadas a despliegues de manera directa y no únicamente mediante proxies.
+
+## 4.4 Declaración de uso de IA generativa, conforme al sílabo.
+
+- Declaración de uso de IA generativa: Se utilizó ChatGPT como herramienta de apoyo durante el laboratorio. Su uso estuvo orientado a comprender la sintaxis del proyecto y cómo estaban distribuidos los archivos, y comportamiento de GitHub Actions, analizar los defectos identificados en el pipeline en base a la guía previa del laboratorio, revisar las modificaciones propuestas por mí, interpretar los resultados de SonarQube Cloud y comprender los mensajes de error obtenidos durante las ejecuciones. Las decisiones finales, modificaciones realizadas en el repositorio, ejecución del pipeline y verificación de los resultados fueron realizadas y validadas por mí.
+
+Ejemplo de prompt utilizado: “Revisa este archivo y ayúdame a entender cómo corregir los defectos relacionados que impiden que la ejecución del pipeline no sea exitosa. Explica qué modifica cada cambio y cómo verificar que el pipeline cumple con lo que se pide en el laboratorio.”
