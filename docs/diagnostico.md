@@ -5,17 +5,17 @@
    - Garantía que se pierde: No se garantiza que un artefacto solo sea publicado después de superar las pruebas y el análisis
    - Consecuencia: publicar puede terminar correctamente aunque validar falle
 2. El Quality Gate de SonarCloud no actúa realmente como gate del pipeline
-   Archivos/líneas: pipeline.yml, líneas 31–39
-   Garantía que se pierde: No se garantiza que un análisis de calidad fallido bloquee el flujo
-   Consecuencia: El scanner puede enviar el análisis a SonarCloud, pero un Quality Gate Failed no necesariamente detiene el workflow
+   - Archivos/líneas: pipeline.yml, líneas 31–39
+   - Garantía que se pierde: No se garantiza que un análisis de calidad fallido bloquee el flujo
+   - Consecuencia: El scanner puede enviar el análisis a SonarCloud, pero un Quality Gate Failed no necesariamente detiene el workflow
 3. Las dependencias se instalan desde cero en cada ejecución y además en ambos jobs
-   Archivos/líneas: pipeline.yml, líneas 23–26 y 53–56
-   Garantía que se pierde: No se garantiza reutilización del trabajo ya realizado entre ejecuciones
-   Consecuencia: Cada run vuelve a descargar/instalar dependencias, aumentando innecesariamente la duración
+   - Archivos/líneas: pipeline.yml, líneas 23–26 y 53–56
+   - Garantía que se pierde: No se garantiza reutilización del trabajo ya realizado entre ejecuciones
+   - Consecuencia: Cada run vuelve a descargar/instalar dependencias, aumentando innecesariamente la duración
 4. Todo push dispara también el job de publicación, sin restricción por rama
-   Archivos/líneas: pipeline.yml, líneas 1–5
-   Garantía que se pierde: No se garantiza que la generación/publicación de artefactos ocurra únicamente desde una rama autorizada
-   Consecuencia: Un push a una rama de trabajo puede generar artefactos igual que un push a main
+   - Archivos/líneas: pipeline.yml, líneas 1–5
+   - Garantía que se pierde: No se garantiza que la generación/publicación de artefactos ocurra únicamente desde una rama autorizada
+   - Consecuencia: Un push a una rama de trabajo puede generar artefactos igual que un push a main
 
 ## 1.2 El defecto que explica la duración. De los cuatro, cuál explica el tiempo que registraron en docs/linea-base.md. Sustenten con el número que midieron.
 
