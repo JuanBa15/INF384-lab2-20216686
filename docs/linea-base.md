@@ -5,9 +5,9 @@ sin modificar ningun archivo del repositorio. Registrar aqui los resultados.
 
 | Ejecucion | Duracion | URL |
 |---|---|---|
-| 1 | | |
-| 2 | | |
-| 3 | | |
+| 1 | 27s | https://github.com/JuanBa15/INF384-lab2-20216686/actions/runs/34511050950 |
+| 2 | 37s | https://github.com/JuanBa15/INF384-lab2-20216686/actions/runs/34511395221 |
+| 3 | 22s | https://github.com/JuanBa15/INF384-lab2-20216686/actions/runs/34511507093 |
 
 ## Declaracion de uso de IA generativa
 
