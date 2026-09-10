@@ -2,6 +2,8 @@ name: pipeline
 
 on:
   push:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
@@ -34,6 +36,11 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@v8
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: https://sonarcloud.io
+        with:
+          args: >
+            -Dsonar.organization=${{ vars.SONAR_ORG }}
+            -Dsonar.projectKey=${{ vars.SONAR_PROJECT_KEY }}
           
       - name: Verificar Quality Gate
         uses: SonarSource/sonarqube-quality-gate-action@master
@@ -43,6 +50,8 @@ jobs:
 
   publicar:
     name: Publicar artefacto
+    needs: validar
+    if: needs.validar.result == 'success' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Descargar el codigo
@@ -58,12 +67,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.lock
 
+      - name: Leer version
+        id: version
+        run: echo "version=$(cat VERSION)" >> "$GITHUB_OUTPUT"
+
       - name: Construir el paquete
         run: python -m build
 
       - name: Publicar el paquete
         uses: actions/upload-artifact@v4
         with:
-          name: paquete
+          name: despachos-${{ steps.version.outputs.version }}
           path: dist/
           overwrite: true
